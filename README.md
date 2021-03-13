@@ -169,6 +169,7 @@ go test ./apihandlertest -v
 
 - Add more unit tests
 - Add caching for calculated result. At the moment the query API need to calculate on every request
+- Sort the input pool values right after inserted/appended. At the moment, the sort happens inside quantile calculation functions.
 - Add benchmark, refactor if required
 - Add Flag to configure the maximum length of input poolValues. It is fixed to 1M points at the moment.
 - Add util scripts for build, test and deploys

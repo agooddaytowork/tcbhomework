@@ -7,7 +7,8 @@ func TestCalculateQuantileNearestRankSortAndUnsorted(t *testing.T) {
 
 	sorted := []int32{15, 20, 35, 40, 50}
 	unsorted := []int32{50, 40, 20, 35, 15}
-
+	sorted2 := []int32{3, 6, 7, 8, 8, 10, 13, 15, 16, 20}
+	sorted3 := []int32{3, 6, 7, 8, 8, 9, 10, 13, 15, 16, 20}
 	testcases := []struct {
 		name            string
 		inputPool       []int32
@@ -19,8 +20,19 @@ func TestCalculateQuantileNearestRankSortAndUnsorted(t *testing.T) {
 		{"tc3", sorted, 40, 20},
 		{"tc4", sorted, 50, 35},
 		{"tc5", sorted, 100, 50},
+
 		{"tc6", unsorted, 30, 20},
 		{"tc7", unsorted, 50, 35},
+
+		{"tc8", sorted2, 25, 7},
+		{"tc9", sorted2, 50, 8},
+		{"tc10", sorted2, 75, 15},
+		{"tc11", sorted2, 100, 20},
+
+		{"tc12", sorted3, 25, 7},
+		{"tc13", sorted3, 50, 9},
+		{"tc14", sorted3, 75, 15},
+		{"tc15", sorted3, 100, 20},
 	}
 
 	for _, tc := range testcases {
