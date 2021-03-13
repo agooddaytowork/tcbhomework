@@ -67,8 +67,9 @@ nnavigate to root folder of this repo, from there run below command:
 go run cmd/poolservice-server/main.go --port 5000
 ```
 
-The command will spin up a REST API server on localhost port 5000 to serve the endpoints
-if port is not specified, a random port will be assigned
+The command will spin up a REST API server on localhost, port 5000, to serve the endpoints.
+
+If port is not specified, a random port will be assigned
 
 sample output:
 
