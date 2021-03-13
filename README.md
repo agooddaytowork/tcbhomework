@@ -22,12 +22,10 @@ go version go1.15.2 darwin/amd64
 ## Description:
 
 This repo delivers the solution of creating a Rest API application with two post endpoints. One is for inserting and the other is for querying pool object.
-The pool object consists of an id and an array containing pool values.
 
-The pool object values can be inserted, then later appended
-
-The query return calculated quantile of a given poolid and percentile.
-
+- The pool object consists of an id and an array containing pool values.
+  - The pool object values can be inserted, then later appended
+  - The query return calculated quantile of a given poolid and percentile.
 - For endpoints detail description: Please read **_ENDPOINTS-DOC.md_**
 - The solution is written in Golang
 - The solution is based on go-swagger framework (an implementation of Open-API 2.0 on Golang).
@@ -47,6 +45,7 @@ The query return calculated quantile of a given poolid and percentile.
 ├── README.md
 ├── ENDPOINTS-DOC.md (generated Doc from swagger.yml)
 ├── apihandler (detail implementation)
+|── apihandlertest (dedicated test package for apihander)
 ├── cmd
 │   └── poolservice-server
 │       └── main.go (entry point of the REST API application)
@@ -62,10 +61,10 @@ The query return calculated quantile of a given poolid and percentile.
 
 ## Run the homework solution
 
-navigate to < PATH TO REPO >/cmd/poolservice-server folder, then run:
+nnavigate to root folder of this repo, from there run below command:
 
 ```
-go run main.go --port 5000
+go run cmd/poolservice-server/main.go --port 5000
 ```
 
 The command will spin up a REST API server on localhost port 5000 to serve the endpoints
@@ -124,8 +123,9 @@ a new "poolservice-server" binary file is generated in the same folder.
 Give this file executable permission and run it directly with below command to serve the endpointds, for example on port 5000
 
 ```
+chmod +x poolservice-server
 ./poolservice-server --port 5000
-2021/03/13 14:28:19 Serving poolservice at http://127.0.0.1:5000
+> 2021/03/13 14:28:19 Serving poolservice at http://127.0.0.1:5000
 ```
 
 ## Unit Tests
