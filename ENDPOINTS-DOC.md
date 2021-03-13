@@ -47,10 +47,10 @@ insert/append values to pools
 
 #### All responses
 
-| Code                            | Status | Description            | Has headers | Schema                                |
-| ------------------------------- | ------ | ---------------------- | :---------: | ------------------------------------- |
-| [200](#insert-pool-200)         | OK     | OK                     |             | [schema](#insert-pool-200-schema)     |
-| [default](#insert-pool-default) |        | generic error response |             | [schema](#insert-pool-default-schema) |
+| Code                            | Status | Description            | Has headers | Schema                                           |
+| ------------------------------- | ------ | ---------------------- | :---------: | ------------------------------------------------ |
+| [200](#insert-pool-200)         | OK     | OK                     |             | [poolObjectAddResponse](#insert-pool-200-schema) |
+| [default](#insert-pool-default) |        | generic error response |             | [errorResponse](#insert-pool-default-schema)     |
 
 #### Responses
 
@@ -88,10 +88,10 @@ insert/append values to pools
 
 #### All responses
 
-| Code                            | Status | Description            | Has headers | Schema                                |
-| ------------------------------- | ------ | ---------------------- | :---------: | ------------------------------------- |
-| [200](#querry-pool-200)         | OK     | OK                     |             | [schema](#querry-pool-200-schema)     |
-| [default](#querry-pool-default) |        | generic error response |             | [schema](#querry-pool-default-schema) |
+| Code                            | Status | Description            | Has headers | Schema                                       |
+| ------------------------------- | ------ | ---------------------- | :---------: | -------------------------------------------- |
+| [200](#querry-pool-200)         | OK     | OK                     |             | [PoolQueryResponse](#querry-pool-200-schema) |
+| [default](#querry-pool-default) |        | generic error response |             | [errorResponse](#querry-pool-default-schema) |
 
 #### Responses
 
