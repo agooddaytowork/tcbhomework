@@ -31,7 +31,7 @@ paths:
              $ref: "#/definitions/errorResponse"
   /api/pools/query:
     post:
-      description: insert/append values to pools
+      description: get calculatedQuantile for a given pool id and percentile 
       tags:
         - pool
       operationId: querryPool
