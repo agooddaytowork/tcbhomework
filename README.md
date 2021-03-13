@@ -114,7 +114,7 @@ curl -d '{"poId":2222,"perceile":95.5}`' -H "Content-Type: application/json" -X 
 > percentile in body is required
 ```
 
-## Build executable binary file
+## Build executable binary file for deployment
 
 Navigate to < PATH TO REPO >/cmd/poolservice-server folder, then run:
 
@@ -168,5 +168,7 @@ go test ./apihandlertest -v
 ## Further developments
 
 - Add more unit tests
+- Add caching for calculated result. At the moment the query API need to calculate on every request
 - Add benchmark, refactor if required
 - Add Flag to configure the maximum length of input poolValues. It is fixed to 1M points at the moment.
+- Add util scripts for build, test and deploys
