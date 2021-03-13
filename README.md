@@ -22,7 +22,10 @@ go version go1.15.2 darwin/amd64
 ## Description:
 
 This repo delivers the solution of creating a Rest API application with two post endpoints. One is for inserting and the other is for querying pool object.
-The pool object consists of an id and an array containing pool values, where it could be inserted or appended.
+The pool object consists of an id and an array containing pool values.
+
+The pool object values can be inserted, then later appended
+
 The query return calculated quantile of a given poolid and percentile.
 
 - For endpoints detail description: Please read **_ENDPOINTS-DOC.md_**
@@ -34,7 +37,8 @@ The query return calculated quantile of a given poolid and percentile.
   - After that the detail implementation are applied based on the generated boilerplate codes.
   - More about go-swagger framework at https://goswagger.io/
 
-- Pool objects are stored in a Map[poolId]PoolObject. The Insert and query are thread safe using sync RW mutex. Data will be lost when server shutting down due to no database implementation
+- Pool objects are stored in a Map[poolId]PoolObject. The Insert and query are thread safe using sync RW mutex.
+- Data will be lost when server shutting down due to no database implementation
 
 ## Project structure
 
@@ -73,6 +77,41 @@ sample output:
 2021/03/13 13:46:21 Serving poolservice at http://127.0.0.1:5000
 ```
 
+### Example Usages
+
+- add a pool object
+
+```
+curl -d '{"poolId":12345,"poolValues":[1,2,3,4,5]}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/add
+
+> {"status":"inserted"}
+
+curl -d '{"poolId":12345,"poolValues":[1,2,3,4,5]}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/add
+
+> {"status":"appended"}
+
+curl -d '{"poolId":12345,"poolValues":[1,2,3,4,5]}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/add
+
+> {"status":"appended"}
+
+curl -d '{"polId":12345,"poolVaes":[2]}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/add
+
+> poolId in body is required
+```
+
+- query a pool object
+
+```
+curl -d '{"poolId":12345,"percentile":95.5}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/query
+> {"calculatedQuantile":5,"totalCount":15}
+
+curl -d '{"poolId":2222,"percentile":95.5}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/query
+> "Pool with id 2222 not found"
+
+curl -d '{"poId":2222,"perceile":95.5}`' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/api/pools/query
+> percentile in body is required
+```
+
 ## Build executable binary file
 
 Navigate to < PATH TO REPO >/cmd/poolservice-server folder, then run:
@@ -100,9 +139,20 @@ go test ./apihandlertest
 
 ```
 
-- The unit tests cover our written codes, the generated codes that are in "restapi", "models" folders are not tested
-- tests are written in \*\_test.go files
+sample output:
 
+```
+go test ./util
+go test ./storage
+go test ./apihandlertest
+ok      tam.io/homework/util    (cached)
+ok      tam.io/homework/storage (cached)
+ok      tam.io/homework/apihandlertest  0.033s
+```
+
+- The unit tests cover only our written codes, the generated codes that are in "restapi", "models" folders are not tested
+- tests are written in \*\_test.go files
+- Regarding apihandlertest, a httptest server is spin up to make the test
 - For more verbose output, please add -v option as below command:
 
 ```
@@ -111,3 +161,9 @@ go test ./storage -v
 go test ./apihandlertest -v
 
 ```
+
+## Further developments
+
+- Add more unit tests
+- Add benchmark
+- Add Flag to configure the maximum length of input poolValues. It is fixed to 1M points at the moment.

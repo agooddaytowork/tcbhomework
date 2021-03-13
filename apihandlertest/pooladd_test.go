@@ -14,10 +14,7 @@ func TestPoolAddEndpointOK(t *testing.T) {
 	ts := getTestServer()
 	defer ts.Close()
 
-	insertRequest := []byte(`{
-		"poolId":12345,
-		"poolValues":[]
-	}`)
+	insertRequest := []byte(`{"poolId":12345,"poolValues":[1,2,3,4,5]}`)
 
 	res, err := http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
 
