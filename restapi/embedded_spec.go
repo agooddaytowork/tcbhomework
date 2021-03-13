@@ -115,7 +115,7 @@ func init() {
         },
         "poolValues": {
           "type": "array",
-          "maxItems": 5,
+          "maxItems": 1000000,
           "items": {
             "type": "number",
             "format": "int32"
@@ -125,6 +125,7 @@ func init() {
       "additionalProperties": false
     },
     "poolObjectAddResponse": {
+      "description": "return add status, staus fileld value will be either \"appended\" or \"inserted\"",
       "type": "object",
       "required": [
         "status"
@@ -132,23 +133,6 @@ func init() {
       "properties": {
         "status": {
           "type": "string"
-        }
-      }
-    },
-    "poolObjectQueryResponse": {
-      "type": "object",
-      "required": [
-        "calculatedQuantile",
-        "totalCount"
-      ],
-      "properties": {
-        "calculatedQuantile": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalCount": {
-          "type": "number",
-          "format": "int64"
         }
       }
     },
@@ -286,7 +270,7 @@ func init() {
         },
         "poolValues": {
           "type": "array",
-          "maxItems": 5,
+          "maxItems": 1000000,
           "items": {
             "type": "number",
             "format": "int32"
@@ -296,6 +280,7 @@ func init() {
       "additionalProperties": false
     },
     "poolObjectAddResponse": {
+      "description": "return add status, staus fileld value will be either \"appended\" or \"inserted\"",
       "type": "object",
       "required": [
         "status"
@@ -303,23 +288,6 @@ func init() {
       "properties": {
         "status": {
           "type": "string"
-        }
-      }
-    },
-    "poolObjectQueryResponse": {
-      "type": "object",
-      "required": [
-        "calculatedQuantile",
-        "totalCount"
-      ],
-      "properties": {
-        "calculatedQuantile": {
-          "type": "number",
-          "format": "double"
-        },
-        "totalCount": {
-          "type": "number",
-          "format": "int64"
         }
       }
     },

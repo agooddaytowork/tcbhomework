@@ -25,7 +25,7 @@ type PoolObject struct {
 
 	// pool values
 	// Required: true
-	// Max Items: 5
+	// Max Items: 1000000
 	PoolValues []int32 `json:"poolValues"`
 }
 
@@ -64,7 +64,7 @@ func (m *PoolObject) validatePoolValues(formats strfmt.Registry) error {
 
 	iPoolValuesSize := int64(len(m.PoolValues))
 
-	if err := validate.MaxItems("poolValues", "body", iPoolValuesSize, 5); err != nil {
+	if err := validate.MaxItems("poolValues", "body", iPoolValuesSize, 1000000); err != nil {
 		return err
 	}
 

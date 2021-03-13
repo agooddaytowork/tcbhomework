@@ -1,166 +1,108 @@
-# TcbHomework
+# TCB Homework
 
-## Informations
+## Prerequisite
 
-### Version
-
-0.1.0
-
-## Content negotiation
-
-### URI Schemes
-
-- http
-
-### Consumes
-
-- application/json
-
-### Produces
-
-- application/json
-
-## All endpoints
-
-### pool
-
-| Method | URI              | Name                        | Summary |
-| ------ | ---------------- | --------------------------- | ------- |
-| POST   | /api/pools/add   | [insert pool](#insert-pool) |         |
-| POST   | /api/pools/query | [querry pool](#querry-pool) |         |
-
-## Paths
-
-### <span id="insert-pool"></span> insert pool (_insertPool_)
+In order to run/test/build the solution of this homework, please install Golang using instructions in below link:
+https://golang.org/doc/install
+To makesure that you have GoLang installed on your PC, you should be able to execute below command :
 
 ```
-POST /api/pools/add
+go version
 ```
 
-insert/append values to pools
-
-#### Parameters
-
-| Name | Source | Type                       | Go type             | Separator | Required | Default | Description |
-| ---- | ------ | -------------------------- | ------------------- | --------- | :------: | ------- | ----------- |
-| body | `body` | [PoolObject](#pool-object) | `models.PoolObject` |           |          |         |             |
-
-#### All responses
-
-| Code                            | Status | Description            | Has headers | Schema                                |
-| ------------------------------- | ------ | ---------------------- | :---------: | ------------------------------------- |
-| [200](#insert-pool-200)         | OK     | OK                     |             | [schema](#insert-pool-200-schema)     |
-| [default](#insert-pool-default) |        | generic error response |             | [schema](#insert-pool-default-schema) |
-
-#### Responses
-
-##### <span id="insert-pool-200"></span> 200 - OK
-
-Status: OK
-
-###### <span id="insert-pool-200-schema"></span> Schema
-
-[PoolObjectAddResponse](#pool-object-add-response)
-
-##### <span id="insert-pool-default"></span> Default Response
-
-generic error response
-
-###### <span id="insert-pool-default-schema"></span> Schema
-
-| Name                   | Type   | Go type | Default | Description | Example |
-| ---------------------- | ------ | ------- | ------- | ----------- | ------- |
-| insertPool defaultBody | string |         |         |             |         |
-
-### <span id="querry-pool"></span> querry pool (_querryPool_)
+sample output:
 
 ```
-POST /api/pools/query
+go version go1.15.2 darwin/amd64
 ```
 
-insert/append values to pools
+- Internet access should be available. Some go modules will be automatically downloaded if not exist in your PC when run/build this solution
 
-#### Parameters
+## Description:
 
-| Name | Source | Type                                    | Go type                   | Separator | Required | Default | Description |
-| ---- | ------ | --------------------------------------- | ------------------------- | --------- | :------: | ------- | ----------- |
-| body | `body` | [PoolQueryRequest](#pool-query-request) | `models.PoolQueryRequest` |           |          |         |             |
+This repo delivers the solution of creating a Rest API application with two post endpoints. One is for inserting and the other is for querying pool object.
+The pool object consists of an id and an array containing pool values, where it could be inserted or appended.
+The query return calculated quantile of a given poolid and percentile.
 
-#### All responses
+- For endpoints detail description: Please read **_ENDPOINTS-DOC.md_**
+- The solution is written in Golang
+- The solution is based on go-swagger framework (an implementation of Open-API 2.0 on Golang).
 
-| Code                            | Status | Description            | Has headers | Schema                                |
-| ------------------------------- | ------ | ---------------------- | :---------: | ------------------------------------- |
-| [200](#querry-pool-200)         | OK     | OK                     |             | [schema](#querry-pool-200-schema)     |
-| [default](#querry-pool-default) |        | generic error response |             | [schema](#querry-pool-default-schema) |
+  - The endpoints specification are descrided in a file called **_swagger.yml_** using Open-API 2.0 standard. Then boilerplate codes and documentation are generated from this **_swagger.yml_** file.
 
-#### Responses
+  - After that the detail implementation are applied based on the generated boilerplate codes.
+  - More about go-swagger framework at https://goswagger.io/
 
-##### <span id="querry-pool-200"></span> 200 - OK
+- Pool objects are stored in a Map[<poolID>]PoolObject. The Insert and query are thread safe using sync RW mutex. Data will be lost when server shutting down due to no database implementation
 
-Status: OK
+## Project structure
 
-###### <span id="querry-pool-200-schema"></span> Schema
+```
+.
+├── README.md
+├── ENDPOINTS-DOC.md (generated Doc from swagger.yml)
+├── apihandler (detail implementation)
+├── cmd
+│   └── poolservice-server
+│   └── main.go (entry point of the REST API application)
+├── genAPI.sh (generate boilate codes from swagger.yml file command)
+├── go.mod
+├── go.sum
+├── models (boilerplate code from swagger)
+├── restapi ( boilerplate code from swagger)
+├── storage ( pool objects storage and query functions)
+├── swagger.yml
+└── util (helper functions such as quantile calculation)
+```
 
-[PoolObjectAddResponse](#pool-object-add-response)
+## Run the homework solution
 
-##### <span id="querry-pool-default"></span> Default Response
+navigate to <PATH TO REPO>/cmd/poolservice-server folder, then run:
 
-generic error response
+```
+go run main.go --port 5000
+```
 
-###### <span id="querry-pool-default-schema"></span> Schema
+The command will spin up a REST API server on localhost port 5000 to serve the endpoints
+if port is not specified, a random port will be assigned
 
-| Name                   | Type   | Go type | Default | Description | Example |
-| ---------------------- | ------ | ------- | ------- | ----------- | ------- |
-| querryPool defaultBody | string |         |         |             |         |
+sample output:
 
-## Models
+```
+2021/03/13 13:46:21 Serving poolservice at http://127.0.0.1:5000
+```
 
-### <span id="error-response"></span> errorResponse
+## Build executable binary file
 
-| Name          | Type   | Go type | Default | Description | Example |
-| ------------- | ------ | ------- | ------- | ----------- | ------- |
-| errorResponse | string | string  |         |             |         |
+Navigate to <PATH TO REPO>/cmd/poolservice-server folder, then run:
 
-### <span id="pool-object"></span> poolObject
+```
+go build
+```
 
-**Properties**
+a new "poolservice-server" binary file is generated in the same folder.
+Give this file executable permission and run it directly with below command to serve the endpointds, for example on port 5000
 
-| Name       | Type                       | Go type   | Required | Default | Description | Example |
-| ---------- | -------------------------- | --------- | :------: | ------- | ----------- | ------- |
-| poolId     | int64 (formatted number)   | `int64`   |    ✓     |         |             |         |
-| poolValues | []int32 (formatted number) | `[]int32` |    ✓     |         |             |         |
+```
+./poolservice-server --port 5000
+2021/03/13 14:28:19 Serving poolservice at http://127.0.0.1:5000
+```
 
-### <span id="pool-object-add-response"></span> poolObjectAddResponse
+## Unit Tests
 
-**Properties**
+navigate to root folder of this repo, from there run below command:
 
-| Name   | Type   | Go type  | Required | Default | Description | Example |
-| ------ | ------ | -------- | :------: | ------- | ----------- | ------- |
-| status | string | `string` |    ✓     |         |             |         |
+```
+go test ./util -v
+go test ./storage -v
 
-### <span id="pool-object-query-response"></span> poolObjectQueryResponse
+```
 
-**Properties**
+- The unit tests cover our written codes, the generated codes that are in "restapi", "models" folders are not tested
+- tests are written in \*\_test.go files
 
-| Name               | Type                      | Go type   | Required | Default | Description | Example |
-| ------------------ | ------------------------- | --------- | :------: | ------- | ----------- | ------- |
-| calculatedQuantile | double (formatted number) | `float64` |    ✓     |         |             |         |
-| totalCount         | int64 (formatted number)  | `int64`   |    ✓     |         |             |         |
+## Integration Tests
 
-### <span id="pool-query-request"></span> poolQueryRequest
-
-**Properties**
-
-| Name       | Type                      | Go type   | Required | Default | Description | Example |
-| ---------- | ------------------------- | --------- | :------: | ------- | ----------- | ------- |
-| percentile | double (formatted number) | `float64` |    ✓     |         |             |         |
-| poolId     | int64 (formatted number)  | `int64`   |    ✓     |         |             |         |
-
-### <span id="pool-query-response"></span> poolQueryResponse
-
-**Properties**
-
-| Name               | Type                      | Go type   | Required | Default | Description | Example |
-| ------------------ | ------------------------- | --------- | :------: | ------- | ----------- | ------- |
-| calculatedQuantile | double (formatted number) | `float64` |    ✓     |         |             |         |
-| totalCount         | int64 (formatted number)  | `int64`   |    ✓     |         |             |         |
+```
+./runIntegrationTest.sh
+```

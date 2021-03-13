@@ -7,7 +7,8 @@ import (
 )
 
 // Return the CalulatedQuantile and error
-// input Pool must be sorted in increasing order
+// Pool must be sorted in increasing order
+// Implementation followed: https://en.wikipedia.org/wiki/Percentile#The_nearest-rank_method
 func CalculateQuantileNearestRank(pool []int32, percentile float64) (int32, error) {
 
 	poolLength := len(pool)
@@ -15,7 +16,7 @@ func CalculateQuantileNearestRank(pool []int32, percentile float64) (int32, erro
 		return 0, errors.New("Input Pool must not be empty")
 	}
 
-	if percentile > 100.0 {
+	if percentile > 100.0 || percentile < 0 {
 		return 0, errors.New("Percentile must be between 0 - 100")
 	}
 

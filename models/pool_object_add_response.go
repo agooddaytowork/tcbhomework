@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// PoolObjectAddResponse pool object add response
+// PoolObjectAddResponse return add status, staus fileld value will be either "appended" or "inserted"
 //
 // swagger:model poolObjectAddResponse
 type PoolObjectAddResponse struct {
