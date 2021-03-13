@@ -4,6 +4,7 @@
 
 In order to run/test/build the solution of this homework, please install Golang using instructions in below link:
 https://golang.org/doc/install
+
 To makesure that you have GoLang installed on your PC, you should be able to execute below command :
 
 ```
@@ -33,7 +34,7 @@ The query return calculated quantile of a given poolid and percentile.
   - After that the detail implementation are applied based on the generated boilerplate codes.
   - More about go-swagger framework at https://goswagger.io/
 
-- Pool objects are stored in a Map[<poolID>]PoolObject. The Insert and query are thread safe using sync RW mutex. Data will be lost when server shutting down due to no database implementation
+- Pool objects are stored in a Map[poolId]PoolObject. The Insert and query are thread safe using sync RW mutex. Data will be lost when server shutting down due to no database implementation
 
 ## Project structure
 
@@ -44,8 +45,8 @@ The query return calculated quantile of a given poolid and percentile.
 ├── apihandler (detail implementation)
 ├── cmd
 │   └── poolservice-server
-│   └── main.go (entry point of the REST API application)
-├── genAPI.sh (generate boilate codes from swagger.yml file command)
+│       └── main.go (entry point of the REST API application)
+├── genAPI.sh (generate boilate codes from swagger.yml file command; must install swagger to use this )
 ├── go.mod
 ├── go.sum
 ├── models (boilerplate code from swagger)
@@ -57,7 +58,7 @@ The query return calculated quantile of a given poolid and percentile.
 
 ## Run the homework solution
 
-navigate to <PATH TO REPO>/cmd/poolservice-server folder, then run:
+navigate to < PATH TO REPO >/cmd/poolservice-server folder, then run:
 
 ```
 go run main.go --port 5000
@@ -74,7 +75,7 @@ sample output:
 
 ## Build executable binary file
 
-Navigate to <PATH TO REPO>/cmd/poolservice-server folder, then run:
+Navigate to < PATH TO REPO >/cmd/poolservice-server folder, then run:
 
 ```
 go build
@@ -93,16 +94,20 @@ Give this file executable permission and run it directly with below command to s
 navigate to root folder of this repo, from there run below command:
 
 ```
-go test ./util -v
-go test ./storage -v
+go test ./util
+go test ./storage
+go test ./apihandlertest
 
 ```
 
 - The unit tests cover our written codes, the generated codes that are in "restapi", "models" folders are not tested
 - tests are written in \*\_test.go files
 
-## Integration Tests
+- For more verbose output, please add -v option as below command:
 
 ```
-./runIntegrationTest.sh
+go test ./util -v
+go test ./storage -v
+go test ./apihandlertest -v
+
 ```
