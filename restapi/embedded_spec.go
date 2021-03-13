@@ -56,12 +56,6 @@ func init() {
               "$ref": "#/definitions/poolObjectAddResponse"
             }
           },
-          "400": {
-            "description": "Bad Client Request",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
           "default": {
             "description": "generic error response",
             "schema": {
@@ -92,12 +86,6 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/poolObjectAddResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Client Request",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
             }
           },
           "default": {
@@ -239,12 +227,6 @@ func init() {
               "$ref": "#/definitions/poolObjectAddResponse"
             }
           },
-          "400": {
-            "description": "Bad Client Request",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
-            }
-          },
           "default": {
             "description": "generic error response",
             "schema": {
@@ -275,12 +257,6 @@ func init() {
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/poolObjectAddResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Client Request",
-            "schema": {
-              "$ref": "#/definitions/errorResponse"
             }
           },
           "default": {

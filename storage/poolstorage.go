@@ -1,9 +1,12 @@
 package storage
 
 import (
+	"errors"
+	"fmt"
 	"sync"
 
 	"tam.io/homework/models"
+	"tam.io/homework/util"
 )
 
 type PoolStorage struct {
@@ -32,8 +35,15 @@ func (store *PoolStorage) Add(inputPool models.PoolObject) string {
 
 }
 
-func (store *PoolStorage) Query(request models.PoolQueryRequest) (float64, error) {
+func (store *PoolStorage) Query(request models.PoolQueryRequest) (int32, error) {
 
-	// result, err := util.CalculateQuantileNearestRank(r)
+	store.Mutex.Lock()
+	pool, found := store.Pools[*request.PoolID]
+	store.Mutex.Unlock()
 
+	if !found {
+		return 0, errors.New("Pool with id " + fmt.Sprintf("%d", *request.PoolID) + " not found")
+	}
+
+	return util.CalculateQuantileNearestRank(pool.PoolValues, *request.Percentile)
 }

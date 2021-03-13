@@ -12,5 +12,6 @@ require (
 	github.com/go-openapi/validate v0.20.2
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/montanaflynn/stats v0.6.5
+	github.com/openlyinc/pointy v1.1.2
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
 )

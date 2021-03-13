@@ -57,48 +57,6 @@ func (o *InsertPoolOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-// InsertPoolBadRequestCode is the HTTP code returned for type InsertPoolBadRequest
-const InsertPoolBadRequestCode int = 400
-
-/*InsertPoolBadRequest Bad Client Request
-
-swagger:response insertPoolBadRequest
-*/
-type InsertPoolBadRequest struct {
-
-	/*
-	  In: Body
-	*/
-	Payload models.ErrorResponse `json:"body,omitempty"`
-}
-
-// NewInsertPoolBadRequest creates InsertPoolBadRequest with default headers values
-func NewInsertPoolBadRequest() *InsertPoolBadRequest {
-
-	return &InsertPoolBadRequest{}
-}
-
-// WithPayload adds the payload to the insert pool bad request response
-func (o *InsertPoolBadRequest) WithPayload(payload models.ErrorResponse) *InsertPoolBadRequest {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the insert pool bad request response
-func (o *InsertPoolBadRequest) SetPayload(payload models.ErrorResponse) {
-	o.Payload = payload
-}
-
-// WriteResponse to the client
-func (o *InsertPoolBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
-
-	rw.WriteHeader(400)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
-	}
-}
-
 /*InsertPoolDefault generic error response
 
 swagger:response insertPoolDefault

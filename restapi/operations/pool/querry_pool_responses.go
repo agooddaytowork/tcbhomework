@@ -57,48 +57,6 @@ func (o *QuerryPoolOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pr
 	}
 }
 
-// QuerryPoolBadRequestCode is the HTTP code returned for type QuerryPoolBadRequest
-const QuerryPoolBadRequestCode int = 400
-
-/*QuerryPoolBadRequest Bad Client Request
-
-swagger:response querryPoolBadRequest
-*/
-type QuerryPoolBadRequest struct {
-
-	/*
-	  In: Body
-	*/
-	Payload models.ErrorResponse `json:"body,omitempty"`
-}
-
-// NewQuerryPoolBadRequest creates QuerryPoolBadRequest with default headers values
-func NewQuerryPoolBadRequest() *QuerryPoolBadRequest {
-
-	return &QuerryPoolBadRequest{}
-}
-
-// WithPayload adds the payload to the querry pool bad request response
-func (o *QuerryPoolBadRequest) WithPayload(payload models.ErrorResponse) *QuerryPoolBadRequest {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the querry pool bad request response
-func (o *QuerryPoolBadRequest) SetPayload(payload models.ErrorResponse) {
-	o.Payload = payload
-}
-
-// WriteResponse to the client
-func (o *QuerryPoolBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
-
-	rw.WriteHeader(400)
-	payload := o.Payload
-	if err := producer.Produce(rw, payload); err != nil {
-		panic(err) // let the recovery middleware deal with this
-	}
-}
-
 /*QuerryPoolDefault generic error response
 
 swagger:response querryPoolDefault
