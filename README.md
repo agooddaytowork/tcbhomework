@@ -19,7 +19,7 @@ go version go1.15.2 darwin/amd64
 
 - Internet access should be available. Some go modules will be automatically downloaded if not exist in your PC when run/build this solution
 
-## Description:
+## Description
 
 This repo delivers the solution of creating a Rest API application with two post endpoints. One is for inserting and the other is for querying pool object.
 
@@ -61,7 +61,7 @@ This repo delivers the solution of creating a Rest API application with two post
 
 ## Run the homework solution
 
-nnavigate to root folder of this repo, from there run below command:
+Navigate to root folder of this repo, from there run below command:
 
 ```
 go run cmd/poolservice-server/main.go --port 5000
@@ -78,6 +78,8 @@ sample output:
 ```
 
 ### Example Usages
+
+- Assumme the server is running at http://127.0.0.1:5000
 
 - add a pool object
 
@@ -166,5 +168,5 @@ go test ./apihandlertest -v
 ## Further developments
 
 - Add more unit tests
-- Add benchmark
+- Add benchmark, refactor if required
 - Add Flag to configure the maximum length of input poolValues. It is fixed to 1M points at the moment.
