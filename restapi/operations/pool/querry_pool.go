@@ -29,7 +29,7 @@ func NewQuerryPool(ctx *middleware.Context, handler QuerryPoolHandler) *QuerryPo
 	return &QuerryPool{Context: ctx, Handler: handler}
 }
 
-/*QuerryPool swagger:route POST /api/pools/query pool querryPool
+/* QuerryPool swagger:route POST /api/pools/query pool querryPool
 
 insert/append values to pools
 
@@ -45,14 +45,12 @@ func (o *QuerryPool) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewQuerryPoolParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }

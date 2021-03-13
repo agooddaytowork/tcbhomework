@@ -35,15 +35,17 @@ func (store *PoolStorage) Add(inputPool models.PoolObject) string {
 
 }
 
-func (store *PoolStorage) Query(request models.PoolQueryRequest) (int32, error) {
+// Return Calculated Quantile, Total Count Length and Error
+func (store *PoolStorage) Query(request models.PoolQueryRequest) (int32, int64, error) {
 
 	store.Mutex.Lock()
 	pool, found := store.Pools[*request.PoolID]
 	store.Mutex.Unlock()
 
 	if !found {
-		return 0, errors.New("Pool with id " + fmt.Sprintf("%d", *request.PoolID) + " not found")
+		return 0, 0, errors.New("Pool with id " + fmt.Sprintf("%d", *request.PoolID) + " not found")
 	}
+	result, err := util.CalculateQuantileNearestRank(pool.PoolValues, *request.Percentile)
 
-	return util.CalculateQuantileNearestRank(pool.PoolValues, *request.Percentile)
+	return result, int64(len(pool.PoolValues)), err
 }

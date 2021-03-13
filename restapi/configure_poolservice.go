@@ -7,11 +7,9 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
 
 	"tam.io/homework/apihandler"
 	"tam.io/homework/restapi/operations"
-	"tam.io/homework/restapi/operations/pool"
 )
 
 //go:generate swagger generate server --target ../../tcbhomework --name Poolservice --spec ../swagger.yml --principal interface{} --exclude-main
@@ -39,16 +37,8 @@ func configureAPI(api *operations.PoolserviceAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.PoolInsertPoolHandler == nil {
-		api.PoolInsertPoolHandler = pool.InsertPoolHandlerFunc(func(params pool.InsertPoolParams) middleware.Responder {
-			return middleware.NotImplemented("operation pool.InsertPool has not yet been implemented")
-		})
-	}
-	if api.PoolQuerryPoolHandler == nil {
-		api.PoolQuerryPoolHandler = pool.QuerryPoolHandlerFunc(func(params pool.QuerryPoolParams) middleware.Responder {
-			return middleware.NotImplemented("operation pool.QuerryPool has not yet been implemented")
-		})
-	}
+	api.PoolInsertPoolHandler = apihandler.NewInsertPoolHandler()
+	api.PoolQuerryPoolHandler = apihandler.NewQueryPoolHandler()
 
 	api.PreServerShutdown = func() {}
 

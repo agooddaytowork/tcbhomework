@@ -29,7 +29,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "title": "Percentile",
+    "title": "TcbHomework",
     "version": "0.1.0"
   },
   "paths": {
@@ -85,7 +85,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/poolObjectAddResponse"
+              "$ref": "#/definitions/poolQueryResponse"
             }
           },
           "default": {
@@ -178,7 +178,7 @@ func init() {
       "properties": {
         "calculatedQuantile": {
           "type": "number",
-          "format": "double"
+          "format": "int32"
         },
         "totalCount": {
           "type": "number",
@@ -200,7 +200,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "title": "Percentile",
+    "title": "TcbHomework",
     "version": "0.1.0"
   },
   "paths": {
@@ -256,7 +256,7 @@ func init() {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/poolObjectAddResponse"
+              "$ref": "#/definitions/poolQueryResponse"
             }
           },
           "default": {
@@ -349,7 +349,7 @@ func init() {
       "properties": {
         "calculatedQuantile": {
           "type": "number",
-          "format": "double"
+          "format": "int32"
         },
         "totalCount": {
           "type": "number",

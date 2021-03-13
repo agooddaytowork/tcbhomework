@@ -14,4 +14,5 @@ require (
 	github.com/montanaflynn/stats v0.6.5
 	github.com/openlyinc/pointy v1.1.2
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
+	google.golang.org/genproto v0.0.0-20210312152112-fc591d9ea70f
 )

@@ -25,7 +25,7 @@ type QuerryPoolOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.PoolObjectAddResponse `json:"body,omitempty"`
+	Payload *models.PoolQueryResponse `json:"body,omitempty"`
 }
 
 // NewQuerryPoolOK creates QuerryPoolOK with default headers values
@@ -35,13 +35,13 @@ func NewQuerryPoolOK() *QuerryPoolOK {
 }
 
 // WithPayload adds the payload to the querry pool o k response
-func (o *QuerryPoolOK) WithPayload(payload *models.PoolObjectAddResponse) *QuerryPoolOK {
+func (o *QuerryPoolOK) WithPayload(payload *models.PoolQueryResponse) *QuerryPoolOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the querry pool o k response
-func (o *QuerryPoolOK) SetPayload(payload *models.PoolObjectAddResponse) {
+func (o *QuerryPoolOK) SetPayload(payload *models.PoolQueryResponse) {
 	o.Payload = payload
 }
 

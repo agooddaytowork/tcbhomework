@@ -44,7 +44,7 @@ paths:
         200:
          description: OK
          schema:
-            $ref: "#/definitions/poolObjectAddResponse"
+            $ref: "#/definitions/poolQueryResponse"
         default:
           description: generic error response
           schema:
@@ -107,7 +107,7 @@ definitions:
     properties: 
       calculatedQuantile:
         type: number 
-        format: double 
+        format: int32 
       totalCount:
         type: number
         format: int64

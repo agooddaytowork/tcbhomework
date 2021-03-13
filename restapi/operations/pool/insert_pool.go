@@ -29,7 +29,7 @@ func NewInsertPool(ctx *middleware.Context, handler InsertPoolHandler) *InsertPo
 	return &InsertPool{Context: ctx, Handler: handler}
 }
 
-/*InsertPool swagger:route POST /api/pools/add pool insertPool
+/* InsertPool swagger:route POST /api/pools/add pool insertPool
 
 insert/append values to pools
 
@@ -45,14 +45,12 @@ func (o *InsertPool) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		r = rCtx
 	}
 	var Params = NewInsertPoolParams()
-
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
 	res := o.Handler.Handle(Params) // actually handle the request
-
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
 }
