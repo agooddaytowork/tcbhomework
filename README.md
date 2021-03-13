@@ -25,7 +25,7 @@ This repo delivers the solution of creating a Rest API application with two post
 
 - The pool object consists of an id and an array containing pool values.
   - The pool object values can be inserted, then later appended
-  - The query return calculated quantile of a given poolid and percentile.
+  - The query return calculated quantile, total value counts of a given poolid and percentile.
 - For endpoints detail description: Please read **_ENDPOINTS-DOC.md_**
 - The solution is written in Golang
 - The solution is based on go-swagger framework (an implementation of Open-API 2.0 on Golang).

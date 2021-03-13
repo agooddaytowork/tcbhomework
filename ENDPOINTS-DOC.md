@@ -78,7 +78,7 @@ generic error response
 POST /api/pools/query
 ```
 
-get calculatedQuantile for a given pool id and percentile
+get calculatedQuantile, total value counts for a given pool id and percentile
 
 #### Parameters
 
