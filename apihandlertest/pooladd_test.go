@@ -2,6 +2,7 @@ package apihandlertest
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -65,5 +66,41 @@ func TestPoolAddEndPointMissingRequiredFields(t *testing.T) {
 
 		})
 	}
+
+}
+
+// RUN 1K concurent add requests
+func TestPoolAddEndpointConcurent(t *testing.T) {
+	ts := getTestServer()
+	defer ts.Close()
+
+	insertRequest := []byte(`{"poolId":123456789,"poolValues":[1,2,3,4,5]}`)
+
+	t.Run("Group", func(t *testing.T) {
+
+		for i := 0; i < 1000; i++ {
+
+			testName := "tc " + fmt.Sprintf("%d", i)
+
+			t.Run(testName, func(t *testing.T) {
+
+				t.Parallel() // enable concurrent
+
+				res, err := http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
+
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				if res.StatusCode != http.StatusOK {
+
+					bodyBytes, _ := ioutil.ReadAll(res.Body)
+					t.Errorf("want status 200, got %d , resp msg: %s", res.StatusCode, bodyBytes)
+				}
+			})
+
+		}
+
+	})
 
 }

@@ -167,7 +167,6 @@ go test ./apihandlertest -v
 
 ## Further developments
 
-- Add more unit tests
 - Add caching for calculated result. At the moment the query API need to calculate on every request
 - Sort the input pool values right after inserted/appended. At the moment, the sort happens inside quantile calculation functions.
 - Add benchmark, refactor if required

@@ -2,9 +2,13 @@ package apihandlertest
 
 import (
 	"bytes"
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"testing"
+
+	"tam.io/homework/models"
 )
 
 const POOL_QUERY_ENDPOINT = "/api/pools/query"
@@ -13,10 +17,17 @@ func TestPoolQueryEndpointOK(t *testing.T) {
 	ts := getTestServer()
 	defer ts.Close()
 
-	insertRequest := []byte(`{"poolId":12345, "poolValues":[1,2,3,4,5]}`)
-	queryRequest := []byte(`{"poolId":12345, "percentile":99.5}`)
+	insertRequest := []byte(`{"poolId":2222, "poolValues":[1,2,3,4,5]}`)
+	queryRequest := []byte(`{"poolId":2222, "percentile":99.5}`)
 
 	_, err := http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
+
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	_, err = http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
 
 	if err != nil {
 		t.Error(err)
@@ -29,11 +40,27 @@ func TestPoolQueryEndpointOK(t *testing.T) {
 		t.Error(err)
 		return
 	}
-
+	bodyBytes, _ := ioutil.ReadAll(res.Body)
 	if res.StatusCode != http.StatusOK {
-		bodyBytes, _ := ioutil.ReadAll(res.Body)
 		t.Errorf("want status 200, got %d , response msg: %s", res.StatusCode, bodyBytes)
 	}
+
+	var resObj models.PoolQueryResponse
+
+	err = json.Unmarshal(bodyBytes, &resObj)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if *resObj.CalculatedQuantile != 5 {
+		t.Errorf("Want CalculatedQuantile 5, got %d", *resObj.CalculatedQuantile)
+	}
+
+	if *resObj.TotalCount != 10 {
+		t.Errorf("Want TotalCount 5, got %d", *resObj.TotalCount)
+	}
+
 }
 
 func TestPoolQueryEndpointPoolNotFound(t *testing.T) {
@@ -87,4 +114,68 @@ func TestPoolQueryEndpointMissingRequiredFields(t *testing.T) {
 
 		})
 	}
+}
+
+// RUN 1K concurrent query test
+func TestPoolQueryEndpointConcurrent(t *testing.T) {
+
+	ts := getTestServer()
+	defer ts.Close()
+
+	insertRequest := []byte(`{"poolId":3333, "poolValues":[1,2,3,4,5]}`)
+	queryRequest := []byte(`{"poolId":3333, "percentile":99.5}`)
+
+	_, err := http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
+
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	_, err = http.Post(ts.URL+POOL_ADD_ENDPOINT, "application/json", bytes.NewBuffer(insertRequest))
+
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Run("group", func(t *testing.T) {
+		for i := 0; i < 1000; i++ {
+
+			testName := "tc " + fmt.Sprintf("%d", i)
+
+			t.Run(testName, func(t *testing.T) {
+
+				t.Parallel() // enable concurrent test
+
+				res, err := http.Post(ts.URL+POOL_QUERY_ENDPOINT, "application/json", bytes.NewBuffer(queryRequest))
+
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				bodyBytes, _ := ioutil.ReadAll(res.Body)
+				if res.StatusCode != http.StatusOK {
+					t.Errorf("want status 200, got %d , response msg: %s", res.StatusCode, bodyBytes)
+				}
+
+				var resObj models.PoolQueryResponse
+
+				err = json.Unmarshal(bodyBytes, &resObj)
+
+				if err != nil {
+					t.Error(err)
+				}
+
+				if *resObj.CalculatedQuantile != 5 {
+					t.Errorf("Want CalculatedQuantile 5, got %d", *resObj.CalculatedQuantile)
+				}
+
+				if *resObj.TotalCount != 10 {
+					t.Errorf("Want TotalCount 5, got %d", *resObj.TotalCount)
+				}
+
+			})
+		}
+	})
 }
