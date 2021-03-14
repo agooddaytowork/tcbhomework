@@ -79,7 +79,7 @@ sample output:
 
 ### Example Usages
 
-- Assumme the server is running at http://127.0.0.1:5000
+- Assume that the server is running at http://127.0.0.1:5000
 
 - add a pool object
 

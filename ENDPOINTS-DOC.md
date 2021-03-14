@@ -132,7 +132,7 @@ generic error response
 
 ### <span id="pool-object-add-response"></span> poolObjectAddResponse
 
-> return add status, staus fileld value will be either "appended" or "inserted"
+> return add status, status field value will be either "appended" or "inserted"
 
 **Properties**
 

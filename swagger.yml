@@ -67,7 +67,7 @@ definitions:
           format: int32
     additionalProperties: false
   poolObjectAddResponse:
-    description: return add status, staus fileld value will be either "appended" or "inserted"
+    description: return add status, status field value will be either "appended" or "inserted"
     type: object
     required:
       - status
